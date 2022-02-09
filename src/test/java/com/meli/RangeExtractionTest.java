@@ -38,5 +38,12 @@ public class RangeExtractionTest {
         String solution = new RangeExtraction().solution(input);
         Assert.assertEquals("-3--1,1-5", solution);
     }
+    
+    @Test
+    public void Given_SequenceAndNoSequenceRangeInOneList_When_RangeExtraction_Then_ReturnsSequenceAndNoSequenceRanges() {
+        Integer[] input = new Integer[]{-3, -2, -1, 1, 3, 4, 5, 7, 8, 9, 10, 12, 14};
+        String solution = new RangeExtraction().solution(input);
+        Assert.assertEquals("-3--1,1,3-5,7-10,12,14", solution);
+    }
 
 }
