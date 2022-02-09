@@ -35,18 +35,34 @@ public class RangeExtraction {
                 }
             }*/
 
-
+            Integer initialPosition = null;
+            Integer finalPosition = null;
             for (int i = 0; i < input.length; i++) {
-                if((i + 1) > input.length)
-                if (input[i + 1] > input[i]) {
-                    outputString += input[i] + "-";
+                if ((i + 1) >= input.length){
+                    outputString += getPrintRangeStructure(input, i, initialPosition, finalPosition);
+                    return outputString;
+                }
+                if (input[i + 1] == input[i] + 1) {
+                    if (initialPosition == null)
+                        initialPosition = i;
+                    else
+                        finalPosition = i + 1;
                 }else{
-                    outputString += "," + input[i];
+                    outputString += getPrintRangeStructure(input, i, initialPosition, finalPosition) + ",";
+                    initialPosition = null;
+                    finalPosition = null;
                 }
             }
         }
 
         return outputString;
+    }
+
+    public String getPrintRangeStructure(Integer[] input, Integer actualPosition, Integer initialPosition, Integer finalPosition){
+        if (initialPosition != null && finalPosition != null)
+            return input[initialPosition]+"-"+input[finalPosition];
+        else
+            return String.valueOf(input[actualPosition]);
     }
 
     //ignoren esto
