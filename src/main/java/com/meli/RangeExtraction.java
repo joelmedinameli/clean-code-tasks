@@ -15,52 +15,51 @@ public class RangeExtraction {
      */
     public String solution(Integer[] input) {
         String outputString = "";
-        if (input.length == 1) {
-            outputString = String.valueOf(input[0]);
-        } else {
-            /*List<Integer> subList = new ArrayList<>(input[0]);
-            for (int i = 1; i < input.length; i++) {
-                if (subList.get(subList.size() - 1) == input[i] + 1) {
-                    subList.add(input[i]);
-                } else {
-                    if (subList.size() >= 3) {
-                        if(outputString.equals("")) {
-                            outputString = subList.get(0) + "-" + subList.get(subList.size() - 1);
-                        } else {
-                            outputString += "," + subList.get(0) + "-" + subList.get(subList.size() - 1);
-                        }
-                    }
+        Integer initialPosition = null;
+        Integer finalPosition = null;
+        Integer nextPosition;
 
-                    subList = new ArrayList<>(input[i]);
-                }
-            }*/
-
-            Integer initialPosition = null;
-            Integer finalPosition = null;
-            for (int i = 0; i < input.length; i++) {
-                if ((i + 1) >= input.length){
-                    outputString += getPrintRangeStructure(input, i, initialPosition, finalPosition);
-                    return outputString;
-                }
-                if (input[i + 1] == input[i] + 1) {
-                    if (initialPosition == null)
-                        initialPosition = i;
-                    else
-                        finalPosition = i + 1;
-                }else{
-                    outputString += getPrintRangeStructure(input, i, initialPosition, finalPosition) + ",";
-                    initialPosition = null;
-                    finalPosition = null;
-                }
+        for (int actualPosition = 0; actualPosition < input.length; actualPosition++) {
+            nextPosition = actualPosition + 1;
+            if (nextPosition >= input.length){
+                outputString += getPrintRangeStructure(input, actualPosition, initialPosition, finalPosition);
+                return outputString;
+            }
+            if (input[nextPosition] == input[actualPosition] + 1) {
+                if (initialPosition == null)
+                    initialPosition = actualPosition;
+                else
+                    finalPosition = nextPosition;
+            }else{
+                outputString += getPrintRangeStructure(input, actualPosition, initialPosition, finalPosition) + ",";
+                initialPosition = null;
+                finalPosition = null;
             }
         }
+
+        /*List<Integer> subList = new ArrayList<>(input[0]);
+        for (int i = 1; i < input.length; i++) {
+            if (subList.get(subList.size() - 1) == input[i] + 1) {
+                subList.add(input[i]);
+            } else {
+                if (subList.size() >= 3) {
+                    if(outputString.equals("")) {
+                        outputString = subList.get(0) + "-" + subList.get(subList.size() - 1);
+                    } else {
+                        outputString += "," + subList.get(0) + "-" + subList.get(subList.size() - 1);
+                    }
+                }
+
+                subList = new ArrayList<>(input[i]);
+            }
+        }*/
 
         return outputString;
     }
 
     public String getPrintRangeStructure(Integer[] input, Integer actualPosition, Integer initialPosition, Integer finalPosition){
         if (initialPosition != null && finalPosition != null)
-            return input[initialPosition]+"-"+input[finalPosition];
+            return input[initialPosition] + "-" + input[finalPosition];
         else
             return String.valueOf(input[actualPosition]);
     }
